@@ -1,0 +1,42 @@
+<div class="card" style="width: 18rem">
+  <img
+    class="card-img-top"
+    src="public\images\apple.jpg"
+    alt="Card image cap"
+  />
+  <div class="card-body">
+    <h5 class="card-title" id="name">Bag of 10 Apples</h5>
+    <p class="card-text">
+      Freshly picked apples sourced from a local farm, organic and GMO-free.
+    </p>
+    <p class="card-text">Price ($): <span id="price">5.50</span></p>
+    <button class="btn btn-success" id="btn_cart">Add To Cart</button>
+  </div>
+</div>
+
+<script>
+  $(`#btn_cart`).click(function () {
+    var name_value = $(`#name`).text();
+    // alert(name_value);
+    var price_value = $(`#price`).text();
+    $.ajax({
+      type: "post",
+      url: "/blog/create_cart_form",
+      // processData: false,
+      // contentType: false,
+      data: {
+        name: name_value,
+        price: price_value,
+        quantity: 1,
+      },
+      success: function (data) {
+        if (data == true) {
+          window.location.href = "/blog/list";
+        }
+      },
+      error: function (data) {
+        alert(data.responseJSON.errors);
+      },
+    });
+  });
+</script>
